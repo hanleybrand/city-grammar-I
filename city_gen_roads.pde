@@ -24,13 +24,18 @@ void setup()
    background(255);
    colorMode(HSB);
    
+   fill(32,32,32,5);
+
+   
    gPaper = new GraphPaper(29, color(155, 252,255), 80);
   
   //gPaper.drawSheet();
   
-  drawRoads(32,32,width-32,height-32, 1);
-  
-  save("procedural city iter 1.jpg");
+  for (int i = 1; i < 6; i = i+1) {
+    //background(255);
+    drawRoads(32,32,width-32,height-32, 1);
+    save("1_1d procedural city iter " + i + ".jpg");
+  }
   
 }
 
@@ -46,6 +51,7 @@ void drawRoads(int a, int b, int c, int d, int level){
   int offsetH = int(random(64)) - int(random(8));
   int offsetV = int(random(64)) - int(random(8));
  
+  int min = 30;
 
   rectNW = new Rectangle(a, b, c/2 - offsetH , d/2 - offsetV); 
   rectNE = new Rectangle(a + c/2, b, c/2 - offsetH , d/2 - offsetV); 
@@ -57,7 +63,7 @@ void drawRoads(int a, int b, int c, int d, int level){
   println("level " + level);
   println("==========================");  
   
-  //fill(random(255),random(255),random(255), random(10,30));
+  fill(random(255),random(255),random(255), random(5,10));
   
   stroke(random(255),random(255),random(255), random(100));
   print("rectNW: ");
@@ -82,10 +88,10 @@ void drawRoads(int a, int b, int c, int d, int level){
   
   println(thisRectX + " , " + thisRectY);
   
-  recurse(rectNW, level, "rectNW" );
-  recurse(rectNE, level, "rectNE");
-  recurse(rectSE, level, "rectSE");
-  recurse(rectSW, level, "rectSW");
+  recurse(rectNW, level, min, "rectNW" );
+  recurse(rectNE, level, min,"rectNE");
+  recurse(rectSE, level, min ,"rectSE");
+  recurse(rectSW, level, min, "rectSW");
 }
 
 void levelColor(int level){
@@ -98,10 +104,10 @@ void rectRect(Rectangle rectIn){
   println(rectIn.x + " , " + rectIn.y + " , " + rectIn.width + " , " + rectIn.height);
 }
 
-void recurse(Rectangle rectIn, int level, String rectName){
+void recurse(Rectangle rectIn, int level, int min, String rectName){
 println("rectName " + rectName);
   println("........................"); 
-  if (rectIn.width >= 30 && rectIn.height >=30){
+  if (rectIn.width >= min && rectIn.height >= min){
     drawRoads(rectIn.x, rectIn.y, rectIn.width,rectIn.height, level + 1);
   }
 
